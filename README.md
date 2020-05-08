@@ -9,10 +9,10 @@ The idea is to adapt the web speech recognition to add commands in easy way.
 
 ## Usage
 
-Need to load it by cdn (at the moment) ==> [SWC => Release 0.0.1](https://github.com/femave/commands-speech/blob/0.0.1/dist/speech-commands.75b5df23.js)
+Need to load it by cdn (at the moment) ==> [SWC => Release 0.0.2](https://github.com/femave/commands-speech/blob/0.0.2/dist/speech-commands.75b5df23.js)
 
 ```
-<script src="https://raw.githubusercontent.com/femave/commands-speech/0.0.1/dist/speech-commands.75b5df23.js"></script>
+<script src="https://raw.githubusercontent.com/femave/commands-speech/0.0.1/dist/speech-commands.7beb63b9.js"></script>
 ```
 
 Then you can use the main class Speech.
