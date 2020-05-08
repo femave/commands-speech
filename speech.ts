@@ -1,4 +1,5 @@
 window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+import commands from './commands';
 export class Speech {
 
     private _recognition = new window.SpeechRecognition();
@@ -15,17 +16,21 @@ export class Speech {
 
     start(): void {
         this._recognition.start();
-        this.setState({isStop: false});
+        this.setState({ isStop: false });
         this.listening();
     };
 
     stop(): void {
-        this.setState({isStop: true});
+        this.setState({ isStop: true });
         this._recognition.stop();
     };
 
     private setState(newState) {
         this._state = newState;
+    }
+
+    private getState() {
+        return this._state;
     }
 
     private listening() {
@@ -34,19 +39,17 @@ export class Speech {
                 this.executeCommand(event.results[i][0].transcript.trim().toLowerCase());
             }
         }
-        this._recognition.addEventListener('end', () => this.start())
     }
 
     get loadCommands() {
-        return {
-            'hello world': () => { console.log('hello world') }
-        };
+        return commands.commands;
     };
 
     private executeCommand(command: string): void {
         console.log(command)
         const commands = this.loadCommands;
-        if(commands[command]) {
+        console.log(commands)
+        if (commands[command]) {
             commands[command]();
         }
 
