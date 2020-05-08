@@ -1,17 +1,32 @@
 window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
 import commands from './commands';
+
+interface State {
+    isStop: boolean;
+}
+interface Config {
+    showSpeech?: boolean,
+    lang?: string
+}
+
 export class Speech {
 
     private _recognition = new window.SpeechRecognition();
-    private _state = {
+    private _state: State = {
         isStop: true
     }
 
-    constructor() {
+    private _config: Config = {
+        showSpeech: false,
+        lang: 'en-EN'
+    }
+
+    constructor(config?: Config) {
         this._recognition.interimResults = false;
         this._recognition.maxAlternatives = 10;
         this._recognition.continuous = true;
         this._recognition.lang = 'es-ES';
+        this._config = { ...this._config, ...config };
     }
 
     start(): void {
@@ -46,12 +61,18 @@ export class Speech {
     };
 
     private executeCommand(command: string): void {
-        console.log(command)
         const commands = this.loadCommands;
-        console.log(commands)
+        this.log(`Command used ==>  ${command}`);
         if (commands[command]) {
             commands[command]();
+        } else {
+            this.log(`No commands available`);
         }
-
     };
+
+    private log(text: string) {
+        if (this._config.showSpeech) {
+            console.log(text)
+        }
+    }
 }

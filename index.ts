@@ -1,6 +1,5 @@
 import { Speech } from './speech';
 
-
 const startBtn = document.getElementById('startBtn');
 startBtn.addEventListener('click', start)
 

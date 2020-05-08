@@ -4,8 +4,7 @@
   "description": "Speech to commands to control a website",
   "main": "index.js",
   "scripts": {
-    "watch": "parcel watch index.html",
-    "parcel": "parcel index.html -p 4200",
+    "watch": "parcel index.html -p 4200",
     "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-clean-dist": "0.0.6",
     "typescript": "^3.8.3"
   }
 }
