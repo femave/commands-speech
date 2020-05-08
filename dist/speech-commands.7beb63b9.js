@@ -5,4 +5,4 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"./commands":"eojW"}],"QCba":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("./speech"),t=document.getElementById("startBtn");function r(){(new e.Speech).start()}t.addEventListener("click",r);
 },{"./speech":"pLTH"}]},{},["QCba"], null)
-//# sourceMappingURL=/speech-commands.44ceeb89.js.map
+//# sourceMappingURL=/speech-commands.7beb63b9.js.map
