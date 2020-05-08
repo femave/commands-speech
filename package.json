@@ -1,0 +1,17 @@
+{
+  "name": "speech-commands",
+  "version": "1.0.0",
+  "description": "Speech to commands to control a website",
+  "main": "index.js",
+  "scripts": {
+    "watch": "parcel watch index.html",
+    "parcel": "parcel index.html -p 4200",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marc Vergara",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.8.3"
+  }
+}
