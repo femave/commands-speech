@@ -4,6 +4,6 @@ const startBtn = document.getElementById('startBtn');
 startBtn.addEventListener('click', start)
 
 function start() {
-    const speech = new Speech();
+    const speech = new Speech({showSpeech: true});
     speech.start();
 }

@@ -60,11 +60,20 @@ export class Speech {
         return commands.commands;
     };
 
+    get starterCommand(): string {
+        return commands.starter_command;
+    }
+
     private executeCommand(command: string): void {
         const commands = this.loadCommands;
-        this.log(`Command used ==>  ${command}`);
-        if (commands[command]) {
-            commands[command]();
+        const prefix = command.split(" ")[0];
+        let sufix = command.split(" ");
+        sufix.shift();
+        const newCommand = [...sufix].join(" ");
+
+        this.log(`Command used ==>  ${newCommand}`);
+        if (this.starterCommand === prefix && commands[newCommand]) {
+            commands[newCommand]();
         } else {
             this.log(`No commands available`);
         }
