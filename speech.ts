@@ -3,6 +3,7 @@ import commands from './commands';
 
 interface State {
     isStop: boolean;
+    isMatch: boolean;
 }
 interface Config {
     showSpeech?: boolean,
@@ -13,7 +14,8 @@ export class Speech {
 
     private _recognition = new window.SpeechRecognition();
     private _state: State = {
-        isStop: true
+        isStop: true,
+        isMatch: false
     }
 
     private _config: Config = {
@@ -22,8 +24,8 @@ export class Speech {
     }
 
     constructor(config?: Config) {
-        this._recognition.interimResults = false;
-        this._recognition.maxAlternatives = 10;
+        this._recognition.interimResults = true;
+        this._recognition.maxAlternatives = 1;
         this._recognition.continuous = true;
         this._recognition.lang = 'es-ES';
         this._config = { ...this._config, ...config };
@@ -49,9 +51,16 @@ export class Speech {
     }
 
     private listening() {
-        this._recognition.onresult = event => {
-            for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
-                this.executeCommand(event.results[i][0].transcript.trim().toLowerCase());
+        this._recognition.onresult = async event => {
+            if (!this.getState().isMatch) {
+                for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
+                    const isCommand = await this.executeCommand(event.results[i][0].transcript.trim().toLowerCase());
+                    if (event.results[i].isFinal || isCommand) {
+                        console.log('isFinal')
+                        this.setState({ isMatch: false });
+
+                    }
+                }
             }
         }
     }
@@ -64,19 +73,19 @@ export class Speech {
         return commands.starter_command;
     }
 
-    private executeCommand(command: string): void {
+    private async executeCommand(command: string): Promise<boolean> {
         const commands = this.loadCommands;
-        const prefix = command.split(" ")[0];
-        let sufix = command.split(" ");
-        sufix.shift();
-        const newCommand = [...sufix].join(" ");
-
-        this.log(`Command used ==>  ${newCommand}`);
-        if (this.starterCommand === prefix && commands[newCommand]) {
-            commands[newCommand]();
-        } else {
-            this.log(`No commands available`);
-        }
+        this.log(`Command used ==>  ${command}`);
+        return new Promise(resolve => {
+            if (commands[command]) {
+                this.setState({ isMatch: true });
+                commands[command]();
+                resolve(true);
+            } else {
+                this.log(`No commands available`);
+                resolve(false);
+            }
+        })
     };
 
     private log(text: string) {
